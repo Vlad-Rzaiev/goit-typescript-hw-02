@@ -30,15 +30,18 @@ export const fetchPhotos = async (
 ): Promise<APIResponse> => {
   const KEY = 'DrZnSkUb4VnNsY7jTJRSRwISgkAKgYIS3odPJTW8878';
 
-  const response = await axios.get(`https://api.unsplash.com/search/photos`, {
-    params: {
-      client_id: KEY,
-      query: searchQuery,
-      orientation: 'landscape',
-      per_page: 18,
-      page: currentPage,
-    },
-  });
+  const response = await axios.get<APIResponse>(
+    `https://api.unsplash.com/search/photos`,
+    {
+      params: {
+        client_id: KEY,
+        query: searchQuery,
+        orientation: 'landscape',
+        per_page: 18,
+        page: currentPage,
+      },
+    }
+  );
 
   return response.data;
 };
