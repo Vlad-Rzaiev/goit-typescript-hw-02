@@ -1,7 +1,13 @@
+import { Image } from '../../unsplash-api';
 import ImageCard from '../ImageCard/ImageCard';
 import style from './ImageGallery.module.css';
 
-export default function ImageGallery({ items, getImgUrl }) {
+type ImageGalleryProps = {
+  items: Image[];
+  getImgUrl: (img: Image) => void;
+};
+
+export default function ImageGallery({ items, getImgUrl }: ImageGalleryProps) {
   return (
     <ul className={style.imageList}>
       {items.map(item => (

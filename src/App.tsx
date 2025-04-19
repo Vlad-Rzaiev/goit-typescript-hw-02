@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchPhotos } from './unsplash-api';
+import { fetchPhotos, Image } from './unsplash-api';
 import toast, { Toaster } from 'react-hot-toast';
 import { nanoid } from 'nanoid';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -12,18 +12,18 @@ import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './components/ImageModal/ImageModal';
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [page, setPage] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isEndOfCollection, setIsEndOfCollection] = useState(false);
+  const [images, setImages] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isEndOfCollection, setIsEndOfCollection] = useState<boolean>(false);
 
-  const id = nanoid();
+  const id: string = nanoid();
 
-  const handleSearch = searchQuery => {
+  const handleSearch = (searchQuery: string): void => {
     setPage(1);
     setImages([]);
     setIsEndOfCollection(false);
@@ -33,21 +33,19 @@ function App() {
   useEffect(() => {
     if (searchQuery === '') return;
 
-    async function getData() {
+    async function getData(): Promise<void> {
       try {
         setIsError(false);
         setIsLoading(true);
 
-        const response = await fetchPhotos(searchQuery.split('/')[0], page);
-        const resultsData = response.data.results;
+        const data = await fetchPhotos(searchQuery.split('/')[0], page);
+        const resultsData = data.results;
 
-        setImages(prevImages => {
-          return [...prevImages, ...resultsData];
-        });
+        setImages(prevImages => [...prevImages, ...resultsData]);
 
         if (
           resultsData.length === 0 ||
-          resultsData.length + images.length >= response.data.total
+          resultsData.length + images.length >= data.total
         ) {
           toast('No more images to load.', {
             icon: '🔚',
@@ -64,17 +62,19 @@ function App() {
     getData();
   }, [page, searchQuery]);
 
-  const openModal = imgItem => {
+  const openModal = (imgItem: Image): void => {
     setSelectedImage(imgItem);
     setIsOpenModal(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setSelectedImage(null);
     setIsOpenModal(false);
   };
 
-  const nextImg = () => {
+  const nextImg = (): void => {
+    if (!selectedImage) return;
+
     const currentIndex = images.findIndex(img => img.id === selectedImage.id);
 
     if (currentIndex === -1 || currentIndex === images.length - 1) {
@@ -84,7 +84,9 @@ function App() {
     setSelectedImage(images[currentIndex + 1]);
   };
 
-  const prevImg = () => {
+  const prevImg = (): void => {
+    if (!selectedImage) return;
+
     const currentIndex = images.findIndex(img => img.id === selectedImage.id);
 
     if (currentIndex === -1 || currentIndex === 0) {

@@ -2,9 +2,20 @@ import { useEffect } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import Modal from 'react-modal';
+import { Image } from '../../unsplash-api';
 import style from './ImageModal.module.css';
 
 Modal.setAppElement('#root');
+
+type ImageModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  imgItem: Image | null;
+  prevImg: () => void;
+  nextImg: () => void;
+  isFirstImg: boolean;
+  isLastImg: boolean;
+};
 
 export default function ImageModal({
   isOpen,
@@ -14,7 +25,7 @@ export default function ImageModal({
   nextImg,
   isFirstImg,
   isLastImg,
-}) {
+}: ImageModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -30,7 +41,7 @@ export default function ImageModal({
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleKeyDown = e => {
+    const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key === 'ArrowLeft' && !isFirstImg) {
         prevImg();
       }
@@ -106,6 +117,7 @@ export default function ImageModal({
       >
         <RiArrowLeftSLine className={style.prevIcon} size={30} />
       </button>
+
       <button
         className={style.nextImg}
         type="button"

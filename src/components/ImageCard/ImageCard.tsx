@@ -1,7 +1,13 @@
+import { Image } from '../../unsplash-api';
 import style from './ImageCard.module.css';
 
-export default function ImageCard({ item, getImgUrl }) {
-  const handleClick = () => {
+type ImageCardProps = {
+  item: Image;
+  getImgUrl: (img: Image) => void;
+};
+
+export default function ImageCard({ item, getImgUrl }: ImageCardProps) {
+  const handleClick = (): void => {
     getImgUrl(item);
   };
 

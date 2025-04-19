@@ -1,17 +1,27 @@
+import { FormEvent } from 'react';
+import { toast as toastType } from 'react-hot-toast';
 import style from './SearchBar.module.css';
 
-export default function SearchBar({ onSubmit, toast }) {
-  const handleSubmit = e => {
-    e.preventDefault();
-    const inputValue = e.target.elements.searchQuery.value.toLowerCase().trim();
+type SearchBarProps = {
+  onSubmit: (searchQuery: string) => void;
+  toast: typeof toastType;
+};
 
-    if (inputValue === '') {
+export default function SearchBar({ onSubmit, toast }: SearchBarProps) {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const inputValue = e.currentTarget.elements.namedItem(
+      'searchQuery'
+    ) as HTMLInputElement;
+    const query = inputValue.value.toLowerCase().trim();
+
+    if (query === '') {
       toast.error('Input field can not be empty. Please enter your query.');
       return;
     }
 
-    onSubmit(inputValue);
-    e.target.reset();
+    onSubmit(query);
+    e.currentTarget.reset();
   };
 
   return (
