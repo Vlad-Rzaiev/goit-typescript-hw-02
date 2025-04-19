@@ -1,0 +1,85 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #0d1117;
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(0, 255, 255, 0.2);
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  background-color: #161b22;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: inset 0px 0px 10px rgba(0, 255, 255, 0.2);
+  transition: box-shadow 250ms linear;
+  width: 100%;
+  max-width: 600px;
+}
+
+.form:hover {
+  box-shadow: inset 0px 0px 20px rgba(0, 255, 255, 0.5);
+}
+
+.input {
+  flex-grow: 1;
+  padding: 12px;
+  font-size: 1rem;
+  color: #0ff;
+  background-color: #0d1117;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 250ms linear, box-shadow 250ms linear;
+  min-width: 0;
+}
+
+.input:focus {
+  border-color: #0ff;
+  box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.7);
+}
+
+.button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #0d1117;
+  background: linear-gradient(135deg, #0ff, #00bfff);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 250ms linear, box-shadow 250ms linear;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #00bfff, #0ff);
+  box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.8);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0px 0px 20px rgba(0, 255, 255, 1);
+}
+
+@media (max-width: 480px) {
+  .form {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+  }
+}

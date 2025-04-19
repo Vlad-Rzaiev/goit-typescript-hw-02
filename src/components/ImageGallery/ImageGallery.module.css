@@ -1,0 +1,36 @@
+.imageList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 30px;
+}
+
+.imageItem {
+  background-color: #131720;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 255, 255, 0.2);
+  transition: transform 250ms linear, box-shadow 250ms linear;
+  flex-basis: 100%;
+}
+
+.imageItem:hover,
+.imageItem:focus {
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(0, 255, 255, 0.4);
+}
+
+@media screen and (min-width: 768px) {
+  .imageItem {
+    flex-basis: calc(50% - 16px);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .imageItem {
+    flex-basis: calc(33.333% - 16px);
+  }
+}
